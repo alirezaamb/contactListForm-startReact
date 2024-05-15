@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { PostContact } from '../../api/post/Post';
 import { ContactType } from '../../utils/type';
 import { PatchContact } from '../../api/patch/patch';
+import { GetContacts } from '../../api/get/Get';
 
 const AddContact = ({
   // setIsUpdate,
@@ -37,7 +38,7 @@ const AddContact = ({
     }
   }, [editedObject]);
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     {
       if (
@@ -55,17 +56,21 @@ const AddContact = ({
           email: enterdEmail,
           id: editedObject ? editedObject.id : Date.now(),
         };
-        console.log(data);
         if (!editedObject) {
-          PostContact({ data });
-          setContacts((prev) => [...prev, data]);
+          const responsePost = await PostContact({ data });
+          if (responsePost) {
+            const getResponse = await GetContacts();
+            if (getResponse.status === 200) setContacts(getResponse.data);
+          }
+          // setContacts((prev) => [...prev, data]);
         } else {
           PatchContact({ data }).then(() => {
-            setContacts((prev: ContactType[]) =>
-              prev.map((contact) =>
-                contact.id === editedObject?.id ? { ...data } : contact
-              )
-            );
+            GetContacts().then((res) => setContacts(res.data));
+            // setContacts((prev: ContactType[]) =>
+            //   prev.map((contact) =>
+            //     contact.id === editedObject?.id ? { ...data } : contact
+            //   )
+            // );
             setSubmitButton('اضافه کردن');
           });
         }
@@ -78,16 +83,27 @@ const AddContact = ({
 
         // setIsUpdate((prev) => !prev);
       } else {
-        enterdName.trim() === '' &&
-          setValidateName('لطفا نام خود را وارد کنید');
-        enterdLastName.trim() === '' &&
-          setValidateLastName('لطفا نام خانوادگی خود را وارد کنید');
-        enterdPhoneNumber.trim() === '' &&
-          setValidatePhoneNumber('لطفا موبایل خود را وارد کنید');
-        enterdRelative.trim() !== 'انتخاب کنید' &&
-          setValidateRelative('لطفا نسبت خود را انتخاب کنید');
-        enterdEmail.trim() === '' &&
-          setValidateEmail('لطفا ایمیل خود را وارد کنید');
+        setValidateName(
+          enterdName.trim() === '' ? 'لطفا نام خود را وارد کنید' : ''
+        );
+
+        setValidateLastName(
+          enterdLastName.trim() === ''
+            ? 'لطفا نام خانوادگی خود را وارد کنید'
+            : ''
+        );
+
+        setValidatePhoneNumber(
+          enterdPhoneNumber.trim() === '' ? 'لطفا موبایل خود را وارد کنید' : ''
+        );
+
+        setValidateRelative(
+          enterdRelative.trim() === '' ? 'لطفا نسبت خود را انتخاب کنید' : ''
+        );
+
+        setValidateEmail(
+          enterdEmail.trim() === '' ? 'لطفا ایمیل خود را وارد کنید' : ''
+        );
       }
     }
   };
