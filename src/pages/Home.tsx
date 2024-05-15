@@ -11,9 +11,9 @@ const Home = () => {
   const [submitButton, setSubmitButton] = useState('اضافه کردن');
 
   return (
-    <div className="mx-3">
+    <div className="mx-3 max-w-[1536px] 2xl:mx-auto">
       <Header />
-      <div className="flex gap-1 mt-2 mx-3 flex-col sm:flex-col sm:gap-3 md:flex-row">
+      <div className="flex gap-1 mt-2 mx-3 flex-col sm:flex-col sm:gap-3 md:flex-row ">
         <AddContact
           setContacts={setContacts}
           editedObject={editedObject}
