@@ -12,21 +12,15 @@ const AddContact = ({
 }: {
   // setIsUpdate: (prev: any) => void;
   setContacts: React.Dispatch<React.SetStateAction<ContactType[]>>;
-  editedObject: ContactType;
+  editedObject: ContactType | null;
   submitButton: string;
   setSubmitButton: (b: string) => void;
 }) => {
-  const [enterdName, setEnterdName] = useState(editedObject.Fname || '');
-  const [enterdLastName, setEnterdLastName] = useState(
-    editedObject.Lname || ''
-  );
-  const [enterdPhoneNumber, setEnterdPhoneNumber] = useState(
-    editedObject.phone || ''
-  );
-  const [enterdRelative, setEnteredRlative] = useState(
-    editedObject.relative || ''
-  );
-  const [enterdEmail, setEnterdEmail] = useState(editedObject.email || '');
+  const [enterdName, setEnterdName] = useState('');
+  const [enterdLastName, setEnterdLastName] = useState('');
+  const [enterdPhoneNumber, setEnterdPhoneNumber] = useState('');
+  const [enterdRelative, setEnteredRlative] = useState('');
+  const [enterdEmail, setEnterdEmail] = useState('');
   const [validateName, setValidateName] = useState('');
   const [validateLastName, setValidateLastName] = useState('');
   const [validatePhoneNumber, setValidatePhoneNumber] = useState('');
@@ -34,7 +28,7 @@ const AddContact = ({
   const [validateEmail, setValidateEmail] = useState('');
 
   useEffect(() => {
-    if (Object.keys(editedObject).length !== 0) {
+    if (editedObject) {
       setEnterdEmail(editedObject.email);
       setEnteredRlative(editedObject.relative);
       setEnterdName(editedObject.Fname);
@@ -62,14 +56,14 @@ const AddContact = ({
           id: editedObject ? editedObject.id : Date.now(),
         };
         console.log(data);
-        if (!editedObject.id) {
+        if (!editedObject) {
           PostContact({ data });
           setContacts((prev) => [...prev, data]);
         } else {
           PatchContact({ data }).then(() => {
             setContacts((prev: ContactType[]) =>
               prev.map((contact) =>
-                contact.id === editedObject.id ? { ...data } : contact
+                contact.id === editedObject?.id ? { ...data } : contact
               )
             );
             setSubmitButton('اضافه کردن');

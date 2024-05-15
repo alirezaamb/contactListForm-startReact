@@ -7,7 +7,7 @@ import { ContactType } from '../utils/type';
 const Home = () => {
   // const [isUpdate, setIsUpdate] = useState(false);
   const [contacts, setContacts] = useState<ContactType[]>([]);
-  const [editedObject, seteditedObject] = useState<ContactType>({});
+  const [editedObject, seteditedObject] = useState<ContactType | null>(null);
   const [submitButton, setSubmitButton] = useState('اضافه کردن');
 
   return (
