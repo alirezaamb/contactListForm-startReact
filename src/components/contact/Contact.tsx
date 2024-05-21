@@ -1,23 +1,29 @@
-import axios, { AxiosResponse } from 'axios';
+// import axios, { AxiosResponse } from 'axios';
 import { ContactType } from '../../utils/type';
-import { BASE_URL } from '../../api/const';
+// import { BASE_URL } from '../../api/const';
 import { GetContacts } from '../../api/get/Get';
 
 const Contact = ({
   contact,
-  setContacts,
+  // setContacts,
   seteditedObject,
   setSubmitButton,
+  setdeletedObjectId,
+  setIsHiddenModal,
 }: {
   contact: ContactType;
-  setContacts: (b: ContactType[] | []) => void;
+  // setContacts: (b: ContactType[] | []) => void;
   seteditedObject: (b: ContactType) => void;
   setSubmitButton: (b: string) => void;
+  setdeletedObjectId: (b: number) => void;
+  setIsHiddenModal: (b: boolean) => boolean;
 }) => {
-  const deleteHandler = async (id: number) => {
-    await axios.delete(`${BASE_URL}/${id}`);
-    const response: AxiosResponse = await GetContacts();
-    setContacts(response.data);
+  const deleteHandler = (id: number) => {
+    // await axios.delete(`${BASE_URL}/${id}`);
+    // const response: AxiosResponse = await GetContacts();
+    // setContacts(response.data);
+    setdeletedObjectId(id);
+    setIsHiddenModal(true);
   };
 
   const editHandler = async (id: number) => {

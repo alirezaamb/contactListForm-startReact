@@ -60,17 +60,13 @@ const AddContact = ({
           const responsePost = await PostContact({ data });
           if (responsePost) {
             const getResponse = await GetContacts();
+            console.log(getResponse, 'getResponse');
             if (getResponse.status === 200) setContacts(getResponse.data);
           }
-          // setContacts((prev) => [...prev, data]);
         } else {
           PatchContact({ data }).then(() => {
             GetContacts().then((res) => setContacts(res.data));
-            // setContacts((prev: ContactType[]) =>
-            //   prev.map((contact) =>
-            //     contact.id === editedObject?.id ? { ...data } : contact
-            //   )
-            // );
+
             setSubmitButton('اضافه کردن');
           });
         }

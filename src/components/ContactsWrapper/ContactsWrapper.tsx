@@ -8,11 +8,15 @@ const ContactsWrapper = ({
   setContacts,
   seteditedObject,
   setSubmitButton,
+  setdeletedObjectId,
+  setIsHiddenModal,
 }: {
   contacts: ContactType[];
   setContacts: (b: ContactType[]) => void;
   seteditedObject: (b: ContactType) => void;
   setSubmitButton: (b: string) => void;
+  setdeletedObjectId: (b: number) => void;
+  setIsHiddenModal: (b: boolean) => boolean;
 }) => {
   useEffect(() => {
     const fetchContacts = async () => {
@@ -32,9 +36,11 @@ const ContactsWrapper = ({
           <Contact
             key={index}
             contact={contact}
-            setContacts={setContacts}
+            // setContacts={setContacts}
             seteditedObject={seteditedObject}
             setSubmitButton={setSubmitButton}
+            setdeletedObjectId={setdeletedObjectId}
+            setIsHiddenModal={setIsHiddenModal}
           />
         ))}
       </div>
