@@ -8,7 +8,7 @@ const Modal = ({
   setContacts,
   setIsHiddenModal,
 }: {
-  deletedObjectId: number;
+  deletedObjectId: number | null;
   setContacts: (b: ContactType[]) => void;
   setIsHiddenModal: (b: boolean) => void;
 }) => {
@@ -18,6 +18,7 @@ const Modal = ({
     setContacts(response.data);
     setIsHiddenModal(false);
   };
+  console.log(deletedObjectId);
 
   return (
     <>

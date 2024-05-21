@@ -60,9 +60,14 @@ const AddContact = ({
           const responsePost = await PostContact({ data });
           if (responsePost) {
             const getResponse = await GetContacts();
-            console.log(getResponse, 'getResponse');
             if (getResponse.status === 200) setContacts(getResponse.data);
           }
+
+          setValidateEmail('');
+          setValidateLastName('');
+          setValidateName('');
+          setValidatePhoneNumber('');
+          setValidateRelative('');
         } else {
           PatchContact({ data }).then(() => {
             GetContacts().then((res) => setContacts(res.data));

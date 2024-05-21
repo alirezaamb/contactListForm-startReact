@@ -15,17 +15,16 @@ const ContactsWrapper = ({
   setContacts: (b: ContactType[]) => void;
   seteditedObject: (b: ContactType) => void;
   setSubmitButton: (b: string) => void;
-  setdeletedObjectId: (b: number) => void;
-  setIsHiddenModal: (b: boolean) => boolean;
+  setdeletedObjectId: (id: number) => void;
+  setIsHiddenModal: (b: boolean) => void;
 }) => {
   useEffect(() => {
     const fetchContacts = async () => {
       const fetchedContacts = await GetContacts();
-
       setContacts(fetchedContacts.data);
     };
     fetchContacts();
-  }, []);
+  }, [setContacts]); // Add setContacts to the dependencies array
 
   return (
     <div className="lg:w-1/2 sm:w-full flex flex-col gap-2">
@@ -36,7 +35,6 @@ const ContactsWrapper = ({
           <Contact
             key={index}
             contact={contact}
-            // setContacts={setContacts}
             seteditedObject={seteditedObject}
             setSubmitButton={setSubmitButton}
             setdeletedObjectId={setdeletedObjectId}
